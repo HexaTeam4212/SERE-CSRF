@@ -1,0 +1,108 @@
+body {
+    background-color: #83B4E6;
+}
+
+h1,h2{
+
+    text-align: center;
+    color: #05488E;
+
+}
+
+p{
+    font-weight : bold;
+}
+
+span {
+    font-weight : normal;
+
+}
+
+#identite, #unite{
+    color : #05488E;
+}
+
+#title-solde{
+    text-align: center;
+    color : #0657AD;
+}
+
+#champ-montant{
+    text-align: right;
+}
+
+#message{
+    text-align: center;
+    padding-top:1vw;
+    color : #05488E;
+}
+
+#conteneur5{
+    float:left;
+}
+
+#conteneur1{
+    float:right;
+}
+
+#element11{
+    padding-right:2vw;
+}
+
+#element12{
+    padding-left:1vw;
+    padding-top:0.5vw;
+}
+
+#conteneur2{
+    float : left;
+    border: 2px ridge;
+    width : 25vw;
+    border-radius : 2%;
+    background-color : #5596D8;
+}
+
+#conteneur3{
+    float : left;
+    border: 2px ridge;
+    width : 35vw;
+    margin-left: 2.5vw;
+    border-radius : 2%;
+    background-color : #5596D8;
+}
+
+#conteneur4{
+    float : right;
+    border: 2px ridge;
+    width : 33vw;
+    border-radius : 2%;
+    background-color : #5596D8;
+}
+
+#bouton-transaction{
+    margin-left: 13vw;
+    border-radius : 7px;
+    height: 30px;
+}
+
+#bouton-deconnexion{
+    border-radius : 7px;
+    height: 25px;
+}
+
+#champ-destinataire{
+    margin-left: 3vw;
+    width: 15vw;
+}
+
+#perso{
+    color : #0657AD;
+}
+
+#logo {
+    width:8vw;
+    height:8vw;
+}
+
+
+

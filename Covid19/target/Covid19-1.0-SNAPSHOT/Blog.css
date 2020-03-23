@@ -1,0 +1,64 @@
+body {
+    background-color: #FF8484;
+}
+h1 {
+    text-align: center;
+    color: #CD1025;
+    font-family:  sans-serif;
+}
+
+h2 {
+    color: #DF2438;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h3 {
+    color: #DA3648;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+textarea {
+    resize: none;
+}
+
+#logo {
+    width:8vw;
+    height:8vw;
+}
+
+#sante {
+    width:42vw;
+    height:21vw;
+}
+
+#bouton-soumission{
+    margin-left:31vw;
+    border-radius : 7px;
+    height: 30px;
+}
+
+#conteneur1{
+    float:left;
+}
+
+#conteneur2{
+    float:left;
+    margin-left:20vw;
+    margin-top:3vw;
+}
+
+#conteneur3 {
+    float: left;
+    border: 2px ridge;
+    border-radius : 4%;
+    padding: 1vw;
+    width: 40vw;
+    margin-left: 3vw; 
+    margin-top: 1vw;
+}
+
+#conteneur4 {
+    float: right;
+    margin-right:5vw;
+}
+

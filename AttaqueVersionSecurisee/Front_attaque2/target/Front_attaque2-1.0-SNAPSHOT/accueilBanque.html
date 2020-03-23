@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Accueil client Banque</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="accueilBanque.css" type="text/css"/>
+        <link rel="shortcut icon" href="Logo_Banquif.png">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <div id="conteneur5">
+            <img id="logo" src="Logo_Banquif.png" alt="Logo Banqu'if">
+        </div>
+        <div id="conteneur1">
+            <div id="element11">
+                <div id="identite"></div>
+            </div>
+            <div id="element12">
+                <button id="bouton-deconnexion">Déconnexion</button> <br><br>
+            </div>
+        </div>
+        <br><br>
+        <h1>Bienvenue sur Banqu'IF !</h1>
+        <br><br>
+        <div id="conteneur2">
+            <h2>Mon compte</h2>
+            <p id="title-solde">Solde : <span id="solde"></span>€</p>
+            <br><br>
+        </div>
+        <div id="conteneur3">	
+            <h2>Faire une transaction</h2>
+            <div>
+                <input type="text" id="champ-destinataire" name="dest" placeholder="Destinataire" onkeypress="touche(onkeypress)"/>
+                <input type="number" id="champ-montant" name="argent" placeholder="Montant" min="0" step="0.01" onkeypress="touche(onkeypress)"/> <span id="unite">€</span>
+            </div>
+            <br>
+            <center>
+                <div>
+                    <input type="password" id="champ-password" name="password" placeholder="Mot de passe" onkeypress="touche(onkeypress)" />
+                </div>
+            </center>
+            <br><br>
+            <div> 
+                <button id="bouton-transaction">Valider transaction</button> 
+                <div id="message"></div>
+                <br>
+            </div>
+        </div>
+
+        <div id="conteneur4">
+            <h2>Mes infos personnelles</h2>
+            <div id="perso">
+                <p>Civilité : <span id="civilite"></span></p>
+                <p>Prénom : <span id="prenom"></span></p>
+                <p>Nom : <span id="nom"></span></p>
+                <p>Date de naissance : <span id="dateNais"></span></p>
+                <p>Adresse postale : <span id="adPost"></span></p>
+                <p>Email : <span id="email"></span></p>
+                <p>Numéro de téléphone : <span id="tel"></span></p>
+            </div>
+        </div>
+
+        <script>
+            //Fonction recuperer profil client en javascript
+            function recupererProfil() {
+                //Appel au serveur
+                $.ajax({
+                    url: './ActionServlet', // adresse du servlet pour communiquer avec serveur
+                    method: 'POST',
+                    data: {//paramètres de la requête web
+                        action: 'recuperer_profil_client'
+                    },
+                    dataType: 'json' //type de retour attendu
+                }).done(function (response) { //Une fois que l'appel est fait avec succès cad retourne le type attendu : json
+
+                    if (response.succes) {
+
+                        console.log('Succes recuperation profil"');
+
+                        $('#identite').html(response.client.prenom + " " + response.client.nom);
+
+                        $('#civilite').html(response.client.civilite);
+                        $('#prenom').html(response.client.prenom);
+                        $('#nom').html(response.client.nom);
+                        $('#dateNais').html(response.client.dateNais);
+                        $('#adPost').html(response.client.adresse);
+                        $('#email').html(response.client.mail);
+                        $('#tel').html(response.client.numTel);
+
+                        $('#solde').html(response.client.solde);
+
+                    } else {
+                        console.log('Echec recuperation profil"');
+                    }
+
+                });
+            }
+
+            function demandeTransaction() {
+                var montant = $('#champ-montant').val();
+                var destinataire = $('#champ-destinataire').val();
+                var mdp = $('#champ-password').val();
+
+                document.getElementById("message").style.color = "#05488E";
+                $('#message').html('Transaction en cours...');
+
+                //Appel au serveur
+                $.ajax({
+                    url: './ActionServlet', // adresse du servlet pour communiquer avec serveur
+                    method: 'POST',
+                    data: {//paramètres de la requête web
+                        action: 'realiser_transaction',
+                        montant: montant,
+                        destinataire: destinataire,
+                        mdp: mdp
+                    },
+                    dataType: 'json' //type de retour attendu
+                }).done(function (response) {
+                    if (response.transaction) {
+                        document.getElementById("message").style.color = "#029643";
+                        $('#message').html('Transaction réussie');
+                        alert("Transaction reussie");
+
+                        $('#solde').html(response.client.solde);
+                    } else {
+                        document.getElementById("message").style.color = "#B82E02";
+                        $('#message').html('Transaction echouée');
+                        alert("Transaction echouee");
+                    }
+                });
+            }
+
+            function deconnexion() {
+                //Appel au serveur
+                $.ajax({
+                    url: './ActionServlet', // adresse du servlet pour communiquer avec serveur
+                    method: 'POST',
+                    data: {//paramètres de la requête web
+                        action: 'deconnecter'
+                    }
+                }).done(function () { //Une fois que l'appel est fait avec succès cad retourne le type attendu : json
+                    console.log("deconnecter");
+                    window.location = "index.html";
+                });
+            }
+
+            function touche(e) {
+                var e = event || window.event;
+                var key = e.keyCode || e.which;
+                if (key === 13) {
+                    demandeTransaction();
+                }
+            }
+
+            $(document).ready(function () {
+                recupererProfil();
+
+                $('#bouton-deconnexion').on('click', function () {
+                    // affichage pour debugage dans la console javascript du navigateur
+                    console.log('Click sur le bouton "Deconnexion"');
+                    deconnexion();
+                });
+
+                $('#bouton-transaction').on('click', function () {
+                    // affichage pour debugage dans la console javascript du navigateur
+                    console.log('Click sur le bouton "Demande transaction"');
+                    demandeTransaction();
+
+                });
+
+            });
+
+
+        </script>
+    </body>
+</html>

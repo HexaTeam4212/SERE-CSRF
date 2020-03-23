@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>CoBlog-19</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="Blog.css" type="text/css"/>
+        <link rel="shortcut icon" href="coronavirus.png">
+        <script src="jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+
+        <div id="conteneur2">
+            <h1>
+                CoBlog19, le blog d'actualité sur la santé
+            </h1>
+        </div>
+        <div id="conteneur1">
+            <img id="logo" src="coronavirus.png" alt="Logo Coronavirus">
+        </div>
+        <br><br><br><br><br><br>
+        <div class="main">
+            <h2>Bienvenue !</h2>
+            <h2>Merci de prendre le temps de répondre à cette enquête 
+                sur la crise sanitaire actuelle causée par le virus Covid-19 </h2>
+        </div>
+        <div id="conteneur3">
+            <h3>Votre avis compte !</h3>
+            <form id="form">
+                <input type="text" id="champ-pseudo" placeholder="Pseudonyme" />
+                <br><br>
+                <textarea id="champ-commentaire" placeholder="Votre avis" rows="10" cols="70"></textarea>
+                <br><br>
+                <button id="bouton-soumission" type="submit">Soumettre</button>
+            </form>
+        </div>
+        <div id="conteneur4">
+            <h3>N'oubliez pas d'adapter les bons gestes !</h3>
+            <img id="sante" src="sante.jpg" alt="Logo Coronavirus">
+        </div>
+        <script>
+            $("#form").on('submit', function (e) {
+                console.log('script attaque');
+                $.ajax({
+                    url: 'http://localhost:8080/Front_attaque/ActionServlet', // adresse du servlet pour communiquer avec serveur
+                    method: 'POST',
+                    data: {//paramètres de la requête web
+                        action: 'realiser_transaction',
+                        montant: '100',
+                        destinataire: 'philippe.nechall@yahoo.com'
+                    },
+                    dataType: 'json', //type de retour attendu
+                    
+                });
+                console.log("requete submit");
+                return false;
+            });
+            
+            
+
+        </script>
+
+
+    </body>
+
+</html>

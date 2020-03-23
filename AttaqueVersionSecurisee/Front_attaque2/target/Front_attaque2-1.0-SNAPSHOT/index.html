@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Connexion </title>
+        <meta charset="UTF-8">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="index.css" type="text/css">
+        <link rel="shortcut icon" href="Logo_Banquif.png">
+    </head>
+    <body>
+        <div id="conteneur2">
+            <img id="logo" src="Logo_Banquif.png" alt="Logo Banqu'if">
+        </div>
+        <br><br>
+    <center>
+        <h1>Banqu'IF, la meilleure banque en ligne !</h1>
+
+        <br>
+        <div id="conteneur1" class="container">
+            <div class="main">
+                <h2>Connexion</h2>
+                <input type="text" id="champ-login" name="login" placeholder="Email" onkeypress="touche(onkeypress)" />
+                <input type="password" id="champ-password" name="password" placeholder="Mot de passe" onkeypress="touche(onkeypress)" /><br><br>
+                <button id="bouton-connexion">Se connecter</button>
+                <div id="message"></div>
+            </div>
+        </div>
+        <script>
+
+            //Fonction connexion en javascript
+            function connexion() {
+                var champLogin = $('#champ-login').val();
+                var champPassword = $('#champ-password').val();
+
+                document.getElementById("message").style.color = "#05488E";
+                $('#message').html('Connexion en cours...');
+
+
+                //Appel au serveur
+                $.ajax({
+                    url: './ActionServlet', // adresse du servlet pour communiquer avec serveur
+                    method: 'POST',
+                    data: {//paramètres de la requête web
+                        action: 'connecter',
+                        login: champLogin,
+                        password: champPassword
+                    },
+                    dataType: 'json' //type de retour attendu
+                }).done(function (response) { //Une fois que l'appel est fait avec succès cad retourne le type attendu : json
+                    console.log("reponse connexion : " + response.connexion);
+                    if (response.connexion) {
+                        console.log("connecte");
+                        // si connexion ok, aller sur la page suivante :
+                        document.getElementById("message").style.color = "#029643";
+                        $('#message').html('Connnexion réussie');
+                        window.location = "accueilBanque.html";
+                        window.refresh();
+                    } else {
+                        console.log("pas connecte");
+                        // si connexion pas ok afficher un texte dans la div message :
+                        document.getElementById("message").style.color = "#B82E02";
+                        $('#message').html('Echec de la connexion');
+                    }
+                });
+            }
+            
+            function touche(e){
+                var e = event || window.event;
+                var key = e.keyCode || e.which;
+                if(key===13){
+                    connexion();
+                }
+            }
+
+            //Appel fonction JS connexion
+            $(document).ready(function () {
+                // ajout d'un "handler" sur le clic du bouton de connexion
+                $('#bouton-connexion').on('click', function () {
+                    // affichage pour debugage dans la console javascript du navigateur
+                    console.log('Click sur le bouton "Je me connecte"');
+                    // appel de la fonction connexion
+                    connexion();
+                });
+            });
+
+        </script>
+    </center>
+</body>
+</html>

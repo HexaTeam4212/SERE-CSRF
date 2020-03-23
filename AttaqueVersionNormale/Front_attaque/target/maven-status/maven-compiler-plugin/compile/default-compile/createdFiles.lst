@@ -1,0 +1,9 @@
+src\RecupererProfilClientAction.class
+src\Serialisation.class
+src\ConnexionClientAction.class
+src\ConnexionClientSerialisation.class
+src\TransactionSerialisation.class
+src\Action.class
+src\RecupererProfilClientSerialisation.class
+src\TransactionAction.class
+src\ActionServlet.class
